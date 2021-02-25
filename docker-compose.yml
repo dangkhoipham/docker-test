@@ -1,0 +1,41 @@
+version: '3.3'
+services:
+  fastapi:
+    image: datascientest/fastapi:1.0.0
+    ports:
+      - "8000:8000"
+    container_name: fastapi
+    networks:
+      - my_network_test_api
+
+  test_auth:
+    image: khoipham0810/test_auth:1.0.1
+    networks:
+      - my_network_test_api
+    volumes:
+      - .:/logs
+    depends_on:
+      - "fastapi"
+
+
+  test_authorization:
+    image: khoipham0810/test_authorization:1.0.1
+    networks:
+      - my_network_test_api
+    volumes:
+      - .:/logs
+    depends_on:
+      - "fastapi"   
+   
+  test_content:
+    image: khoipham0810/test_content:1.0.1
+    networks:
+      - my_network_test_api
+    volumes:
+      - .:/logs
+    depends_on:
+      - "fastapi"
+
+networks:
+  my_network_test_api:
+
